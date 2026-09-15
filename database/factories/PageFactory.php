@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 /**
  * @extends Factory<Page>
  *
- * The content/theme shape here is a minimal, provisional approximation of
- * what `qlinqs-estrutura-de-dados.md` is expected to define in full — that
- * document doesn't exist in the repo yet. Update this factory once it lands.
+ * The content/theme shape is a minimal but valid instance per
+ * `qlinqs-estrutura-de-dados.md` §3-§7 — it passes App\Validation\PageContentRules
+ * and App\Validation\PageThemeRules.
  */
 class PageFactory extends Factory
 {
@@ -55,7 +55,7 @@ class PageFactory extends Factory
     }
 
     /**
-     * A minimal, provisional theme shape shared with TemplateFactory.
+     * A minimal, valid theme shape shared with TemplateFactory.
      *
      * @return array<string, mixed>
      */
