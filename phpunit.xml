@@ -23,8 +23,16 @@
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="BROADCAST_CONNECTION" value="null"/>
         <env name="CACHE_STORE" value="array"/>
-        <env name="DB_CONNECTION" value="sqlite"/>
-        <env name="DB_DATABASE" value=":memory:"/>
+        <!--
+            The schema relies on the citext extension and jsonb columns,
+            neither of which SQLite supports, so tests run against the same
+            Docker Compose Postgres used in dev (127.0.0.1:5433, from .env),
+            just a separate logical database so RefreshDatabase never touches
+            dev data. Requires `docker compose up -d` (the `db` service) to
+            be running.
+        -->
+        <env name="DB_CONNECTION" value="pgsql"/>
+        <env name="DB_DATABASE" value="qlinqs_core_api_test"/>
         <env name="DB_URL" value=""/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
