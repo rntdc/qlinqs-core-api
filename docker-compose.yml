@@ -1,0 +1,38 @@
+name: qlinqs-core-api
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: qlinqs-core-api-app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:17-alpine
+    container_name: qlinqs-core-api-db
+    environment:
+      POSTGRES_DB: qlinqs_core_api
+      POSTGRES_USER: qlinqs
+      POSTGRES_PASSWORD: qlinqs
+    ports:
+      - "5433:5432"
+    volumes:
+      - qlinqs-core-api-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U qlinqs -d qlinqs_core_api"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  qlinqs-core-api-db-data:
