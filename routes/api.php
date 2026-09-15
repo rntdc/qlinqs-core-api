@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\PublicPageController;
 use App\Http\Controllers\TemplateController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -15,3 +16,5 @@ Route::put('page/theme', [PageController::class, 'updateTheme']);
 Route::post('page/apply-template/{template}', [PageController::class, 'applyTemplate']);
 
 Route::get('templates', [TemplateController::class, 'index']);
+
+Route::get('p/{slug}', [PublicPageController::class, 'show']);
