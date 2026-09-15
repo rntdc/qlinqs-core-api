@@ -10,6 +10,38 @@ beforeEach(function () {
     $this->page = Page::factory()->for($this->profile)->create();
 });
 
+it('returns the current page via GET /api/page', function () {
+    $response = $this->getJson('/api/page');
+
+    $response->assertOk();
+    $response->assertJson([
+        'id' => $this->page->id,
+        'content' => $this->page->content,
+        'theme' => $this->page->theme,
+    ]);
+});
+
+it('reflects a PUT content change on the next GET /api/page', function () {
+    $payload = validPageContent();
+    $payload['header']['name'] = 'Reflected Name';
+
+    $this->putJson('/api/page/content', $payload)->assertOk();
+
+    $response = $this->getJson('/api/page');
+
+    $response->assertOk();
+    expect($response->json('content.header.name'))->toBe('Reflected Name');
+});
+
+it('returns 404 with a clear message from GET /api/page when no dev profile page exists', function () {
+    Profile::query()->delete();
+
+    $response = $this->getJson('/api/page');
+
+    $response->assertStatus(404);
+    expect($response->json('message'))->toContain(config('qlinqs.dev_profile_slug'));
+});
+
 it('updates only content via PUT /api/page/content', function () {
     $originalTheme = $this->page->theme;
     $payload = validPageContent();

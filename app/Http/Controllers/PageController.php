@@ -29,6 +29,11 @@ class PageController extends Controller
 
     private const THEME_KEYS = ['page', 'blockDefaults', 'fonts', 'palette'];
 
+    public function show(): JsonResponse
+    {
+        return $this->respond($this->demoPage());
+    }
+
     public function updateContent(ValidatePageContentRequest $request): JsonResponse
     {
         $page = $this->demoPage();
