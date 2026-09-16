@@ -317,3 +317,50 @@ it('does not require hidden on a container block', function () {
 
     expect(Validator::make($data, PageContentRules::rules($data))->passes())->toBeTrue();
 });
+
+it('passes the new "background" link layout', function () {
+    $data = validPageContent();
+    $data['blocks'][0]['layout'] = 'background';
+
+    expect(Validator::make($data, PageContentRules::rules($data))->passes())->toBeTrue();
+});
+
+it('still rejects an unknown link layout', function () {
+    $data = validPageContent();
+    $data['blocks'][0]['layout'] = 'sideways';
+
+    $validator = Validator::make($data, PageContentRules::rules($data));
+
+    expect($validator->fails())->toBeTrue();
+    expect($validator->errors()->has('blocks.0.layout'))->toBeTrue();
+});
+
+it('passes overrides.imagePosition left/right on an atomic card', function (string $position) {
+    $data = validPageContent();
+    $data['blocks'][0]['card']['overrides'] = ['imagePosition' => $position];
+
+    expect(Validator::make($data, PageContentRules::rules($data))->passes())->toBeTrue();
+})->with(['left', 'right']);
+
+it('passes overrides.imagePosition left/right on a container item', function (string $position) {
+    $data = validPageContent();
+    $data['blocks'] = [validCarouselBlock([
+        'items' => [[
+            'title' => 'Slide 1',
+            'image' => ['source' => 'upload', 'value' => 'asset-1'],
+            'overrides' => ['imagePosition' => $position],
+        ]],
+    ])];
+
+    expect(Validator::make($data, PageContentRules::rules($data))->passes())->toBeTrue();
+})->with(['left', 'right']);
+
+it('rejects an invalid imagePosition value', function () {
+    $data = validPageContent();
+    $data['blocks'][0]['card']['overrides'] = ['imagePosition' => 'top'];
+
+    $validator = Validator::make($data, PageContentRules::rules($data));
+
+    expect($validator->fails())->toBeTrue();
+    expect($validator->errors()->has('blocks.0.card.overrides.imagePosition'))->toBeTrue();
+});

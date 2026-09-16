@@ -35,7 +35,7 @@ class PageContentRules
 {
     public const V1_BLOCK_TYPES = ['link', 'whatsapp', 'maps', 'text', 'heading'];
 
-    public const LINK_LAYOUTS = ['button', 'thumbnail', 'featured'];
+    public const LINK_LAYOUTS = ['button', 'thumbnail', 'background', 'featured'];
 
     public const CONTAINER_TYPES = ['carousel', 'grid'];
 

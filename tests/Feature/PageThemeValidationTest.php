@@ -65,7 +65,7 @@ it('fails when page.background is entirely missing', function () {
     expect($validator->errors()->has('page.background'))->toBeTrue();
 });
 
-it('rejects align and size inside blockDefaults', function (string $field) {
+it('rejects align, size and imagePosition inside blockDefaults', function (string $field) {
     $data = validPageTheme();
     $data['blockDefaults'][$field] = 'left';
 
@@ -73,7 +73,7 @@ it('rejects align and size inside blockDefaults', function (string $field) {
 
     expect($validator->fails())->toBeTrue();
     expect($validator->errors()->has("blockDefaults.$field"))->toBeTrue();
-})->with(['align', 'size']);
+})->with(['align', 'size', 'imagePosition']);
 
 it('rejects an out-of-range corner value in blockDefaults', function () {
     $data = validPageTheme();
