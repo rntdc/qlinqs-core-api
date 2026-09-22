@@ -1,142 +1,227 @@
-# Qlinqs — Contexto do Produto
+# Qlinqs — Project Context
 
-Este documento explica **o que** o Qlinqs é e **por quê**, sem entrar em detalhe
-técnico (isso vive no documento de estrutura de dados e nos `CLAUDE.md` de cada
-parte do código). É a referência de intenção — o "norte" por trás das decisões.
-Seu par técnico é o `qlinqs-estrutura-de-dados.md`.
+This document explains what the project is and why. Read it before
+proposing a feature, scoping work, naming a concept, or writing UI copy —
+it's what keeps a change inside the product's intent instead of merely
+plausible. The last three sections carry what an agent can't infer from
+the code: the shared vocabulary, the decisions we made that no other
+document records, and where every technical answer lives.
 
-## O que é
+## What it is
 
-**Qlinqs** é um SaaS de "link na bio" — uma única página pública
-(`qlinqs.com/seu-nome`) que reúne links, redes sociais, canais de contato e
-conteúdo num só lugar, feita pra ir na bio das redes (Instagram, TikTok, etc.),
-que só permitem um link clicável.
+**Qlinqs** is a "link in bio" SaaS — a single public page
+(`qlinqs.com/your-name`)
+that brings together links, social media, contact channels, and content
+in one place, meant to be placed in social media bios (Instagram,
+TikTok, etc.), which only allow one clickable link.
 
-## O problema que existe hoje
+## The problem that exists today
 
-O mercado já tem players estabelecidos — o **Linktree** é o mais conhecido, o
-**Liinks** é um concorrente mais novo e mais rico em recursos. Olhando de perto,
-os dois deixam a mesma lacuna aberta, por caminhos opostos:
+The market already has established players — **Linktree** is the best
+known, **Liinks** is a newer, feature-richer competitor. Looking closely
+at both, two patterns of weakness showed up:
 
-- **Linktree** é fácil de usar, mas visualmente rígido: layout de coluna única,
-  pouco controle real de design, sempre preso ao domínio deles.
-- **Liinks** tem muito mais recurso (blocos variados, gates de conteúdo, gerador
-  de background com efeitos), mas isso vem com complexidade — e, apesar da
-  variedade, usuários relatam que **personalizar é confuso**. Não por falta de
-  controle, e sim por *ergonomia*: você monta a partir de peças abstratas e tem
-  que garimpar qual combinação de opções produz o que você já tinha na cabeça.
+- **Linktree** is easy to use but visually rigid: single-column layout,
+  little real design control, always stuck with their domain
+  (`linktr.ee/...`) even on paid plans.
+- **Liinks** has far more features (varied blocks, content gates, a
+  background generator with effects), but that comes with more
+  complexity, and users report missing fine-grained design controls
+  (e.g. numeric corner-rounding adjustment) despite the block variety.
 
-Ou seja: existe um vão entre "simples porém sem graça" e "rico porém complicado"
-que nenhum dos dois preenche.
+In other words: there's a gap between "simple but plain" and "rich but
+complicated" that neither one fully fills.
 
-## A aposta do produto
+## The product's bet
 
-**Personalização visual é a tese central, não um recurso a mais.** A página não
-pode parecer um template genérico — o usuário precisa deixá-la com a cara da
-própria marca/identidade **sem saber design nem código**. Toda decisão de escopo
-do MVP gira em torno de proteger essa aposta: infraestrutura avançada e
-monetização são cortadas primeiro; a camada de personalização, nunca.
+**Visual personalization is the core thesis**, not a nice-to-have
+feature. The page can't feel like a generic template — the user needs
+to be able to make it look like their own brand/identity without
+knowing design or code. Every MVP scoping decision revolves around
+protecting that bet: advanced infrastructure and monetization features
+get cut first, the personalization layer never does.
 
-A forma concreta de entregar isso é dupla:
+A close second is that the page has to actually **work as a presentation
+tool**, not just a stack of links — it needs to hold the specific blocks
+a person or business relies on to look credible and be reachable (a
+contact CTA, a location, a redirect to the right channel), styled to
+match their identity.
 
-1. **Templates prontos e bonitos** como porta de entrada — a pessoa escolhe uma
-   "cara" completa num clique e a página inteira fica coerente, sem tocar em
-   nenhum controle individual. Quem não quer pensar, não pensa.
-2. **Blocos que partem de presets reconhecíveis** em vez de peças abstratas — a
-   pessoa escolhe "Card com imagem", "Botão", "WhatsApp" já vendo a forma, e só
-   ajusta o que quiser. Reconhecimento no lugar de garimpo.
+## Who it's for
 
-Os controles finos continuam existindo por baixo, pra quem quiser mexer — mas
-ninguém *precisa* começar por eles. Essa é a correção direta do que torna o Liinks
-confuso.
+People and small businesses building their presence around Instagram
+who need a single, presentable entry point that also acts as a
+lightweight professional front door — content creators, influencers,
+local businesses (clinics, studios, shops), freelancers, and artists.
+The first MVP is scoped and positioned for the Brazilian market
+(PT-BR), where Instagram is a primary channel for exactly this kind of
+audience.
 
-Uma segunda aposta, logo atrás: a página tem que **funcionar como ferramenta de
-apresentação**, não só empilhar links. Ela precisa carregar os blocos específicos
-de que uma pessoa ou negócio depende pra parecer confiável e ser encontrável (um
-CTA de contato, uma localização, um redirecionamento pro canal certo), estilizados
-pra combinar com a identidade.
+These are people who will actually *look* at their own page often and
+care about how it looks and how well it represents them — not just
+about "having the links in one place."
 
-## Pra quem é
+Two illustrative profiles the product needs to serve well from day one:
 
-Pessoas e pequenos negócios que constroem sua presença em torno do Instagram e
-precisam de um ponto de entrada único e apresentável, que também funcione como uma
-porta de frente profissional leve — criadores de conteúdo, influenciadores,
-negócios locais (clínicas, estúdios, lojas), freelancers e artistas. O primeiro
-MVP é escopado e posicionado pro mercado brasileiro (PT-BR), onde o Instagram é
-canal primário pra exatamente esse público.
+- **A local business (e.g. a clinic):** wants a WhatsApp CTA as the main
+  action, its location via a maps link, and a redirect to its Instagram
+  or other social profile — a professional, trustworthy front page more
+  than a link list.
+- **A creator/influencer:** wants a Spotify link, affiliate links, and a
+  block redirecting to their YouTube channel — a personal hub that still
+  looks like their own brand.
 
-São pessoas que vão de fato *olhar* pra própria página com frequência e se importar
-com como ela aparece e como as representa — não só com "ter os links num lugar só".
+Both cases are covered by the same building blocks (links, redirects,
+CTAs), styled differently — this is exactly what "personalizable
+biosite" means in practice.
 
-Dois perfis ilustrativos que o produto precisa servir bem desde o dia um:
+## How the MVP was scoped
 
-- **Negócio local (ex.: uma clínica):** quer um CTA de WhatsApp como ação
-  principal, sua localização via mapa, e um redirecionamento pro Instagram ou
-  outro perfil — uma página de frente profissional e confiável, mais que uma
-  lista de links.
-- **Criador/influenciador:** quer um link do Spotify, links de afiliado e um bloco
-  que redireciona pro canal do YouTube — um hub pessoal que ainda parece a marca
-  dele.
+The overall philosophy: **ship something small, but with the right
+"spine"** — cut features are left out entirely rather than
+half-implemented, and the data structure is already designed to grow
+without needing to be redone later.
 
-Os dois casos são cobertos pelos mesmos blocos (links, redirecionamentos, CTAs),
-estilizados de forma diferente — é exatamente isso que "biosite personalizável"
-significa na prática.
+**What's in v1:**
+- Create an account and claim a link (`qlinqs.com/slug`)
+- Build the page with a set of practical block types covering both
+  creator and local-business use cases: links, redirects (social
+  profiles, YouTube, etc.), a WhatsApp/contact CTA, a location/maps
+  block, dividers, text, and social icons
+- Deep customization of the look: colors, typography, element shape,
+  background (solid or simple gradient) — styling is the area the MVP
+  invests in most, since it's the core differentiator
+- Basic analytics: page views and click counts per block, enough to
+  show the user their page is working, without a full analytics suite
+- See the public page rendered, fast and responsive on mobile
 
-## Como o MVP foi escopado
+**What's left out for now — and why:**
+- **Payment/subscription**: doesn't make sense to charge before there's
+  something worth paying for.
+- **Multi-profile**: an advanced-user/agency feature — most early users
+  only need one profile.
+- **Custom domain**: a refinement that only matters once someone is
+  already actively using the product.
+- **Content gates/paywall**: a creator-monetization feature, a more
+  advanced stage than the MVP.
+- **Advanced analytics** (referrers, audience breakdowns, time-based
+  trends): the MVP proves the page gets used at all; deeper analytics
+  come once that's validated.
 
-A filosofia geral: **entregar algo pequeno, mas com a espinha certa** — features
-cortadas ficam de fora por inteiro em vez de meio-implementadas, e a estrutura de
-dados já nasce desenhada pra crescer sem precisar ser refeita depois.
+None of these are oversights — they're deliberate cuts to stay focused
+on the core thesis (personalization, plus just enough functional
+breadth and feedback to be genuinely useful) and ship faster.
 
-**O que entra no v1:**
+## How this connects to the development phases
 
-- Criar conta e reivindicar um link (`qlinqs.com/slug`).
-- Montar a página com um conjunto de blocos práticos que cobrem tanto o caso do
-  criador quanto o do negócio local: links (em layouts botão, thumbnail e card em
-  destaque), redirecionamentos, CTA de WhatsApp/contato, bloco de
-  localização/mapa, divisórias, texto e ícones sociais.
-- Personalização profunda da aparência, entregue via **templates** + controles
-  finos: paleta de cores, tipografia, forma dos elementos, efeito dos blocos e
-  fundo (sólido ou gradiente simples) — a área em que o MVP mais investe, por ser
-  o diferencial central.
-- Analytics básico: views de página e cliques por bloco, o suficiente pra mostrar
-  ao usuário que a página funciona, sem uma suíte completa.
-- Ver a página pública renderizada, rápida e responsiva no mobile.
+The technical roadmap (documented separately) follows this priority
+order: foundation first (account, profile, basic blocks), then
+personalization in depth, then a well-working public page with basic
+analytics — always in that order, because cutting the personalization
+phase to "save time" would mean cutting the reason the product exists.
 
-**O que fica de fora por enquanto — e por quê:**
+## Feature inspiration (used as reference, not to be copied outright)
 
-- **Pagamento/assinatura:** não faz sentido cobrar antes de haver algo que valha a
-  pena pagar.
-- **Multi-perfil:** recurso de usuário avançado/agência — a maioria dos primeiros
-  usuários só precisa de um perfil.
-- **Domínio customizado:** um refinamento que só importa quando alguém já está
-  usando o produto ativamente.
-- **Gates de conteúdo/paywall:** recurso de monetização de criador, estágio mais
-  avançado que o MVP.
-- **Analytics avançado** (referrers, perfil de audiência, tendências temporais): o
-  MVP prova que a página é usada; analytics profundo vem depois disso validado.
-- **Recursos de "catálogo de possibilidades":** gerador de background animado
-  (mesh/blobs/smoke), ícones 3D, geração de imagem por IA, galeria de imagens,
-  carrossel e grid, preview automático de link (Open Graph). Ficam pra fases
-  posteriores — a estrutura de dados já os comporta sem retrabalho.
+The detailed mapping of Liinks' blocks and design options (done as
+market research) serves as a **catalog of possibilities** for future
+phases — not as an MVP task list. Things like the shader-based
+background generator, 3D icons, AI image generation, and the
+reveal-a-hidden-block countdown are examples of "what can be built
+later," once the foundation (simple, well-structured personalization,
+plus the essential blocks and basic analytics) is solid.
 
-Nenhum desses é um esquecimento — são cortes deliberados pra manter o foco na tese
-central (personalização, mais amplitude funcional e feedback só o suficiente pra
-ser genuinamente útil) e entregar mais rápido.
+## Vocabulary
 
-## Como isso se conecta às fases de desenvolvimento
+These words mean one specific thing here. Use them as written, in code,
+in conversation, and in UI copy.
 
-O roadmap técnico segue esta ordem de prioridade: fundação primeiro (conta, perfil,
-blocos básicos), depois personalização em profundidade, depois uma página pública
-bem-feita com analytics básico — sempre nessa ordem, porque cortar a fase de
-personalização pra "ganhar tempo" seria cortar a razão de o produto existir.
+- **Profile** — the public identity: the owner plus the `slug` that routes
+  `qlinqs.com/slug`. One per user in v1.
+- **Page** — the profile's page. Its whole editable state is two
+  documents: **content** (header, social icons, blocks) and **theme**
+  (page styles, block defaults, fonts, palette). One page per profile in
+  v1.
+- **Block** — one entry in the page's flat, ordered list. Either
+  **atomic** (carries exactly one card) or a **container** (carries a
+  list of cards).
+- **Card** — the clickable unit of content: image, title, description,
+  button text, label, link, plus its own style overrides. The same card
+  appears in an atomic block, a carousel and a grid — only how much of
+  it shows changes.
+- **Layout** — for `link` blocks, which face the card wears: `button`,
+  `thumbnail`, `background` or `featured`. The layout decides which card
+  fields render, never which fields the card keeps.
+- **Overrides** — a block's own style values. A missing key means "inherit
+  the theme"; a present key means "this block decides". Rendering is
+  `override ?? theme.blockDefaults ?? hard default`.
+- **Theme** — the page's whole look in one object, including the semantic
+  **palette** (`background`, `text`, `surface`, `onSurface`, `accent`,
+  `onAccent`). Swapping the palette recolors the entire page.
+- **Template** — a curated theme with a name and a preview. Applying one
+  **copies** its theme onto the page.
+- **Label** — the public badge on a card ("NOVO", "PROMO"), visible to
+  visitors. Not a private organization tag; that was cut from v1.
 
-## Inspiração de features (referência, não pra copiar tal e qual)
+The product is PT-BR. UI copy is written in Portuguese ("Editar página",
+"Adicionar bloco", "Herda do tema", "Falta imagem"), while code, comments
+and docs are in English.
 
-O mapeamento detalhado dos blocos e opções de design do Liinks (feito como pesquisa
-de mercado) serve como **catálogo de possibilidades** pra fases futuras — não como
-lista de tarefas do MVP. Coisas como o gerador de background baseado em shader, os
-ícones 3D, a geração de imagem por IA e o countdown que revela um bloco escondido
-são exemplos do que pode ser construído mais tarde, uma vez que a fundação
-(personalização simples e bem-estruturada, mais os blocos essenciais e analytics
-básico) esteja sólida.
+## Rules that constrain every change
+
+These are product rules first. Breaking one is a product bug even when
+the code is correct.
+
+- **Inheritance by absence.** A style field only exists on a block once
+  the user touches it, and resetting it removes the key. This is what
+  makes a theme or template swap recolor everything at once — the
+  product's whole differentiator.
+- **Applying a template copies, never links.** Editing a template later
+  must never change a page that already applied it.
+- **One level of depth.** Containers hold cards. A container never holds
+  another container, and a card never holds children.
+- **A card keeps every field.** Switching layout hides fields, it never
+  discards what the user typed. Switching back brings the text back.
+- **Cut features stay cut, not half-built.** The data already has room
+  for them (see "How the MVP was scoped"), so adding one later is a
+  feature, not a migration.
+
+## Decisions this project made on its own
+
+These started as implementation calls rather than product design, and
+they're what a fresh agent would otherwise re-invent under a different
+name. `DATA-MODEL.md` now records them all; this is the short version.
+
+- **`background` link layout** — the image fills the whole button with
+  the title overlaid. Our fourth layout (DATA-MODEL §5.1).
+- **`imagePosition`** (`left` | `right`) — which side the thumbnail image
+  sits on. Block-only, like `align` and `size`: never a theme default.
+- **A container's items are cards, not blocks.** This is how "containers
+  hold blocks" is implemented, and it's what keeps nesting impossible.
+- **`page.background.type`** — we named the field that holds the
+  background's kind; the product design describes the setting without
+  naming a key for it.
+- **Colors are plain strings** for now; whether they become references to
+  palette roles is still open (DATA-MODEL §9.6).
+- **Layouts are only enumerated for `link` blocks.** The other block
+  types accept any layout name until their own matrix exists
+  (DATA-MODEL §9.8).
+- **No auth yet.** The editing endpoints act on one fixed profile
+  (slug `teste`) until accounts exist. Ownership checks arrive with auth.
+
+## Where the technical answers live
+
+Product intent is here. Everything else has one home — read it there
+rather than restating it:
+
+The first three live at the project root, next to this file; the fourth
+is a skill inside `core-api`:
+
+- **Business rules and the JSON model** (blocks, cards, layouts, theme,
+  what's v1 vs post-v1, what's still open): `DATA-MODEL.md`.
+- **What the API actually implements today** (routes, request and
+  response shapes, validation rules verbatim, and where the
+  implementation departs from the data model): `API-MAPPING.md`. This is
+  the source of truth when the data model disagrees with reality.
+- **Stacks, versions and commands for both halves**: `STACK.md`.
+- **The database as it really is** (columns, types, keys, models,
+  commands): the `qlinqs-database` skill in `core-api/.claude/skills/`.

@@ -18,7 +18,7 @@ use Illuminate\Support\Arr;
 class PageController extends Controller
 {
     /**
-     * Top-level content/theme keys per qlinqs-estrutura-de-dados.md §3/§7.
+     * Top-level content/theme keys per DATA-MODEL.md §3/§7.
      * Persistence is restricted to these (dropping unknown top-level keys),
      * but nested data underneath each is saved as sent — the validators
      * deliberately don't enumerate every optional nested field (§7.1), so

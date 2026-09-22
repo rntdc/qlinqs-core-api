@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 // Intentionally no relationship to Page: applying a template copies its
-// theme into pages.theme, it doesn't link to it (qlinqs-estrutura-banco.md §3.4).
+// theme into pages.theme, it doesn't link to it (see the qlinqs-database
+// skill, or DATA-MODEL.md §7.5).
 #[Fillable(['name', 'preview', 'theme'])]
 class Template extends Model
 {

@@ -5,7 +5,7 @@ namespace App\Validation;
 use Illuminate\Validation\Rule;
 
 /**
- * Validation rules for pages.theme / templates.theme (qlinqs-estrutura-de-dados.md §7).
+ * Validation rules for pages.theme / templates.theme (DATA-MODEL.md §7).
  *
  * The doc doesn't name a discriminator key for `page.background`'s type —
  * we chose `background.type` ourselves; that's our naming, not the spec's.

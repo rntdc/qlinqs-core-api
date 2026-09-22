@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
  * @extends Factory<Page>
  *
  * The content/theme shape is a minimal but valid instance per
- * `qlinqs-estrutura-de-dados.md` §3-§7 — it passes App\Validation\PageContentRules
+ * `DATA-MODEL.md` §3-§7 — it passes App\Validation\PageContentRules
  * and App\Validation\PageThemeRules.
  */
 class PageFactory extends Factory

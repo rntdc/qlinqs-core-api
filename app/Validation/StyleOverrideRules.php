@@ -6,7 +6,7 @@ use Illuminate\Validation\Rule;
 
 /**
  * Style override fields shared between a block's card.overrides
- * (qlinqs-estrutura-de-dados.md §5.3) and theme.blockDefaults (§7.3) — same
+ * (DATA-MODEL.md §5.3) and theme.blockDefaults (§7.3) — same
  * shape, minus `align`/`size`/`imagePosition`, which are block-only and
  * never belong in blockDefaults.
  */
@@ -21,7 +21,7 @@ class StyleOverrideRules
     public const SIZE = ['large', 'small'];
 
     // Used by the link block's `thumbnail` layout (image left/right of the
-    // text). Our own addition, not in qlinqs-estrutura-de-dados.md.
+    // text). Our own addition, not in DATA-MODEL.md.
     public const IMAGE_POSITION = ['left', 'right'];
 
     /**

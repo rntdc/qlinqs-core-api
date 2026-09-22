@@ -159,3 +159,40 @@ This project has domain-specific skills available in `**/skills/**`. You MUST ac
 - After the feature tests pass, ask the user to run the complete suite with `php artisan test --compact`.
 
 </laravel-boost-guidelines>
+
+# Qlinqs — core-api
+
+This is the API half of Qlinqs, a "link in bio" SaaS whose core bet is visual
+personalization. The other half is `core-app` (Next.js), a sibling directory.
+
+## Read before you work
+
+- **`qlinqs.md`** — what the product is and why, the shared vocabulary
+  (profile, page, block, card, layout, overrides, theme, palette, template),
+  the product rules that constrain every change, and the decisions this
+  project made that no other document records. Read it before proposing a
+  feature, scoping work, or naming a concept.
+- **`DATA-MODEL.md`** — the business rules behind the `pages.content` and
+  `pages.theme` JSON: the card, the layout × fields matrix, containers, style
+  inheritance by absence, what is v1 and what is post-v1.
+- **`API-MAPPING.md`** — what this API actually implements today: routes,
+  request and response shapes, validation rules verbatim, and where the
+  implementation departs from the data model.
+- **`STACK.md`** — versions and commands for both halves.
+- **The `qlinqs-database` skill** (`.claude/skills/qlinqs-database/`) — the
+  real schema, column by column, the Eloquent layer, and the commands.
+  Activate it whenever you touch migrations, models or queries.
+
+## Working here
+
+- The database only guarantees valid JSON. The validators in `app/Validation`
+  own the shape of `content` and `theme`, and they are the boundary that
+  enforces what is v1.
+- `PageController` persists `Arr::only` of the documented top-level keys, not
+  `validated()`, so nested fields survive as sent.
+- Run artisan and migrations inside the container
+  (`docker compose exec app php artisan …`). The host's Postgres on 5432
+  belongs to something else; this project's database is published on 5433.
+- Pest runs on the host against the `qlinqs_core_api_test` database in the
+  same container, so the db container must be up.
+- Work stays on the `staging` branch, and commits happen only when asked.

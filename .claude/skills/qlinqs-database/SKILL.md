@@ -11,7 +11,7 @@ product docs). Read the linked reference files for full detail; this page is
 the map.
 
 For the HTTP API built on this database (routes, request/response shapes,
-Scramble discrepancies), see `core-app/docs/API-MAPPING.md` — don't duplicate
+Scramble discrepancies), see `API-MAPPING.md` at the project root — don't duplicate
 it here, link to it when a route matters.
 
 ## How it works
@@ -51,7 +51,8 @@ it here, link to it when a route matters.
 ## Tables
 
 Full column-by-column detail (types, nullability, defaults, PK/unique/index,
-FK + `ON DELETE`) is in **`reference/schema.md`**. At a glance:
+FK + `ON DELETE`) is in **`reference/schema.md`**, and the ER diagram is
+`reference/schema-diagram.png`. At a glance:
 
 | Table | PK | Purpose |
 |---|---|---|
@@ -125,7 +126,7 @@ Headline points:
   $topLevelKeys)`, **not** `$request->validated()` — nested fields the
   validator doesn't explicitly enumerate are kept as sent; only unknown
   **top-level** keys get dropped. Don't "simplify" this to `validated()`;
-  that regressed a real bug once (see `core-app/docs/API-MAPPING.md` §2).
+  that regressed a real bug once (see `API-MAPPING.md` §2, at the project root).
 
 ## Commands
 

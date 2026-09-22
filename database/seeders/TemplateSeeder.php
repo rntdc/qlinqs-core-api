@@ -6,7 +6,7 @@ use App\Models\Template;
 use Illuminate\Database\Seeder;
 
 /**
- * Starter templates for the template gallery (qlinqs-estrutura-de-dados.md
+ * Starter templates for the template gallery (DATA-MODEL.md
  * §7.5) — curated, visually distinct themes a user can apply with one
  * click. Idempotent: updateOrCreate by name, safe to re-run.
  */

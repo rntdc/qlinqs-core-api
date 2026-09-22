@@ -10,7 +10,7 @@ nothing about their internal shape. The shape is owned entirely by
 
 This file is the rules, verbatim from code, current as of the container-blocks
 and link-layout-reorg changes. For the HTTP-facing version of this same
-content (with request/response examples), see `core-app/docs/API-MAPPING.md`
+content (with request/response examples), see `API-MAPPING.md` at the project root
 §2 — keep both in sync if you change a rule.
 
 ## `pages.content`

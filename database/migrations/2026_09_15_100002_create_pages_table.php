@@ -17,8 +17,8 @@ return new class extends Migration
 
             // The internal JSONB shape (content: header/socialIcons/blocks;
             // theme: page/blockDefaults/fonts/palette) is validated at the
-            // application boundary, per qlinqs-estrutura-de-dados.md (not yet
-            // in this repo). `content` defaults to an empty object so a page
+            // application boundary, per DATA-MODEL.md (project root).
+            // `content` defaults to an empty object so a page
             // row can exist before the editor writes real content; `theme`
             // has no default since a page is always created with one
             // (either the default theme or a copy from a template).

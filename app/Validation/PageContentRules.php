@@ -5,7 +5,7 @@ namespace App\Validation;
 use Illuminate\Validation\Rule;
 
 /**
- * Validation rules for pages.content (qlinqs-estrutura-de-dados.md §3-§6).
+ * Validation rules for pages.content (DATA-MODEL.md §3-§6).
  *
  * Several rules are conditional on a block's `kind`/`type` and can't be
  * expressed as static wildcard rules, so they're computed per block index
